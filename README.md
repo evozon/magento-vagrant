@@ -1,0 +1,1 @@
+# Default Vagrant Web Project
