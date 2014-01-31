@@ -5,14 +5,14 @@
 # Application Configuration
 #-----------------------------------------------------------------------------
 app_config = {
-    "name"              => "vagrant",
+    "name"              => "magento-vagrant",
     "box"               => "precise64",
     "box_url"           => "https://files.vagrantup.com/precise64.box",
     "guest_ip"          => "33.33.33.10",
     "memory"            => "2048",
-    "hostname"          => "vagrant.dev.evozon.com",
-    "sync_folder"       => "/www/vagrant",
-    "docroot"           => "/www/vagrant/public",
+    "hostname"          => "magento.dev",
+    "sync_folder"       => "/www/magento",
+    "docroot"           => "/www/magento",
     "chef_version"      => "11.8.0"
 }
 
@@ -74,7 +74,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced Folders
   #-----------------------------------------------------------------------------
   # NFS sync folder
-  config.vm.synced_folder ".", app_config["sync_folder"], type: "nfs"
+  config.vm.synced_filder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "./magento", app_config["sync_folder"], type: "nfs"
 
 
   #-----------------------------------------------------------------------------
@@ -107,6 +108,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             "server_root_password" => "freemail",
             "server_repl_password" => "freemail",
             "server_debian_password" => "freemail"
+        },
+        "magento" => {
+            "dir" => app_config["sync_folder"]
         }
     })
     chef.add_role("vagrant")

@@ -1,3 +1,14 @@
-/nbproject/
 .vagrant
+nbproject/
 Berksfile.lock
+*~
+*#
+.#*
+/cookbooks
+
+# Bundler
+Gemfile.lock
+.bundle/*
+
+.kitchen/
+.kitchen.local.yml

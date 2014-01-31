@@ -21,4 +21,4 @@ cookbook 'mysql', '4.0.20'
 cookbook 'evozon', 
     path: './chef/site-cookbooks/evozon'
 cookbook 'magento-ce',
-    path: '../evozon-cookbooks/magento-ce'
+    path: './chef/site-cookbooks/magento-ce'
