@@ -32,8 +32,8 @@ The following softwares needs to be installed:
 | SSh Port         | 2222         |
 | MySQL Host       | 127.0.0.1	  |
 | MySQL Port       | 3306 		  |
-| MySQL User       | magento 	  |
-| MySQL Password   | magento 	  |
+| MySQL User       | root 	  	  |
+| MySQL Password   | freemail 	  |
 
 ## Virtualhost
 

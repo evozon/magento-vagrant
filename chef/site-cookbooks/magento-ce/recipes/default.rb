@@ -75,8 +75,8 @@ mysql_database_user node['magento']['db']['user'] do
 end
 
 # install magento
-url = URI::HTTP.build({ :host => node['hostname'], :port => Integer(node['magento']['apache']['unsecure_port']), :path => "/"})
-secure_url = URI::HTTPS.build({ :host => node['hostname'], :port => Integer(node['magento']['apache']['secure_port']), :path => "/"})
+url = URI::HTTP.build({ :host => node['fqdn'], :port => Integer(node['magento']['apache']['unsecure_port']), :path => "/"})
+secure_url = URI::HTTPS.build({ :host => node['fqdn'], :port => Integer(node['magento']['apache']['secure_port']), :path => "/"})
 
 execute "magento-install" do
     args = [
@@ -102,6 +102,15 @@ execute "magento-install" do
     ]
 
     args << "--db_prefix #{node['magento']['db']['prefix']}" unless node['magento']['db']['prefix'].empty?
+    args << "--session_save #{node['magento']['app']['session_save']}" unless node['magento']['app']['session_save'].empty?
+    args << "--admin_frontname #{node['magento']['app']['admin_frontname']}" unless node['magento']['app']['admin_frontname'].empty?
+    args << "--skip_url_validation #{node['magento']['app']['skip_url_validation']}" unless node['magento']['app']['skip_url_validation'].empty?
+    args << "--use_rewrites #{node['magento']['app']['use_rewrites']}" unless node['magento']['app']['use_rewrites'].empty?
+    args << "--use_secure #{node['magento']['app']['use_secure']}" unless node['magento']['app']['use_secure'].empty?
+    args << "--secure_base_url #{node['magento']['app']['secure_base_url']}" unless node['magento']['app']['secure_base_url'].empty?
+    args << "--use_secure_admin #{node['magento']['app']['use_secure_admin']}" unless node['magento']['app']['use_secure_admin'].empty?
+    args << "--enable_charts #{node['magento']['app']['enable_charts']}" unless node['magento']['app']['enable_charts'].empty?
+    args << "--encryption_key #{node['magento']['app']['encryption_key']}" unless node['magento']['app']['encryption_key'].empty?
   
     cwd node['magento']['dir']
     command "php -f install.php -- #{args.join(' ')}"

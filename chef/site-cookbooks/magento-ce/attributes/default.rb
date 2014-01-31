@@ -26,14 +26,14 @@ default['magento']['app']['admin_email'] = "mage@example.com"
 default['magento']['app']['admin_password'] = "admin123456"
 default['magento']['app']['admin_frontname'] = "admin"
 
-default['magento']['app']['session_save'] = ""
+default['magento']['app']['session_save'] = "files"
 default['magento']['app']['skip_url_validation'] = "yes"
 default['magento']['app']['use_rewrites'] = "yes"
 default['magento']['app']['use_secure'] = "no"
 default['magento']['app']['secure_base_url'] = "no"
 default['magento']['app']['use_secure_admin'] = "no"
-default['magento']['app']['enable_charts'] = ""
-default['magento']['app']['encryption_key'] = ""
+default['magento']['app']['enable_charts'] = "no"
+default['magento']['app']['encryption_key'] = "magento"
 
 default['magento']['sites'] = Array.new
 

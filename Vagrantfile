@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced Folders
   #-----------------------------------------------------------------------------
   # NFS sync folder
-  config.vm.synced_filder ".", "/vagrant", disabled: true
+  config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.synced_folder "./magento", app_config["sync_folder"], type: "nfs"
 
 
@@ -115,7 +115,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     })
     chef.add_role("vagrant")
     chef.add_role("webserver")
-    chef.add_role("magento-ce")
+    chef.add_recipe("magento-ce")
   end
 
 end
