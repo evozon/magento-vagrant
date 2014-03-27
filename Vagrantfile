@@ -20,6 +20,9 @@ app_config = {
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.require_plugin "vagrant-berkshelf"
+Vagrant.require_plugin "vagrant-omnibus"
+Vagrant.require_plugin "vagrant-hostmanager"
+Vagrant.require_plugin "vagrant-vbguest"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 

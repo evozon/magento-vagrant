@@ -1,1 +1,0 @@
-# Magento default installation directory
