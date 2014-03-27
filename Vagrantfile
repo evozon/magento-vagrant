@@ -84,7 +84,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Synced Folders
   #-----------------------------------------------------------------------------
   # NFS sync folder
-  config.vm.synced_folder ".", "/vagrant", disabled: true
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
   config.vm.synced_folder "./magento", app_config["sync_folder"], type: "nfs"
 
 
@@ -110,7 +110,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.environments_path = "./chef/environments"
     chef.environment = app_config['chef_env']
     chef.log_level = app_config['chef_log']
-    chef.add_role("vagrant")
     chef.run_list = VAGRANT_JSON.delete('run_list')
     chef.json = VAGRANT_JSON.merge!({
         "mysql" => {
