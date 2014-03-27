@@ -12,3 +12,7 @@ Gemfile.lock
 
 .kitchen/
 .kitchen.local.yml
+
+# Ignore magento code from git
+magento/*
+!magento/.gitkeep

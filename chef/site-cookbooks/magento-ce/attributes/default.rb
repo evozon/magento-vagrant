@@ -9,10 +9,8 @@ default['magento']['db']['host'] = "localhost"
 default['magento']['db']['model'] = "mysql4"
 default['magento']['db']['prefix'] = ""
 
-::Chef::Node.send(:include, Opscode::OpenSSL::Password)
-
-default['magento']['db']['password'] = secure_password
-default['magento']['keys']['enckey'] = secure_password
+default['magento']['db']['password'] = "freemail"
+default['magento']['keys']['enckey'] = "freemail"
 
 default['magento']['app']['locale'] = "en_US"
 default['magento']['app']['timezone'] = "Europe/London"
@@ -45,3 +43,11 @@ default['magento']['php']['upload_max_filesize'] = "50M"
 
 default['magento']['apache']['unsecure_port'] = 80
 default['magento']['apache']['secure_port'] = 443
+
+# Magento Modules
+default['magento']['modules']['elasticsearch']['enabled'] = false
+
+# Override params for elasticsearch 1.0.0 installation
+override['elasticsearch']['version'] = "1.0.0"
+override['java']['install_flavor'] = "openjdk"
+override['java']['jdk_version'] = "7"

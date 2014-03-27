@@ -2,10 +2,10 @@ name        "vagrant"
 description "vagrant role"
 
 all_env = [
-    "recipe[apt]",
-    "recipe[build-essential]",
-    "recipe[vim]",
-    "recipe[git]",
+    "role[base]",
+    "role[webserver]",
+    "role[elasticsearch]",
+    "recipe[magento-ce]"
 ]
 
 run_list(all_env)

@@ -5,6 +5,8 @@
 # Copyright 2014, Evozon Systems
 #
 
-%w{ php5-cli unzip htop }.each do |pkg|
-    package pkg
+node['evozon']['base_packages'].each do |name|
+    package name do
+    	action :install
+    end
 end

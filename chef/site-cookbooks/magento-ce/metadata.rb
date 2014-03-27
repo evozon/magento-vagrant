@@ -10,3 +10,8 @@ supports		 'ubuntu'
 depends 'apache2'
 depends 'mysql'
 depends 'database'
+depends 'elasticsearch', '0.3.7'
+
+provides "default"
+provides "elasticsearch"
+provides "install"
