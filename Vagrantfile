@@ -4,16 +4,22 @@
 #-----------------------------------------------------------------------------
 # Application Configuration
 #-----------------------------------------------------------------------------
+
 app_config = {
-    "name"              => "magento-vagrant",
     "box"               => "precise64",
-    "box_url"           => "https://files.vagrantup.com/precise64.box",
-    "guest_ip"          => "33.33.33.10",
-    "memory"            => "2048",
-    "hostname"          => "magento.dev",
+    "box_url"           => "http://files.vagrantup.com/precise64.box",
+    "guest_ip"          => "33.33.33.34",
+    "hostname"          => "magento.local",
+    "aliases"           => %w(pma.magento.local),
     "sync_folder"       => "/www/magento",
     "docroot"           => "/www/magento",
-    "chef_version"      => "11.8.0"
+    "chef_version"      => "11.8.2",
+    "chef_env"          => "dev",
+    "chef_log"          => "debug",
+    "virtualbox"        => {
+      "cpus"                  => "2",
+      "memory"                => "2048"
+    }
 }
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
@@ -50,6 +56,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.hostmanager.manage_host = true
     config.hostmanager.ignore_private_ip = false
     config.hostmanager.include_offline = false
+    config.hostmanager.aliases = app_config['aliases']
   end
 
 
@@ -86,10 +93,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #-----------------------------------------------------------------------------
   config.vm.provider :virtualbox do |vb|
     vb.gui = false
-    vb.customize ["modifyvm", :id, "--memory", app_config["memory"]]
-    vb.customize ["modifyvm", :id, "--name", app_config["name"]]
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+    app_config["virtualbox"].each do |key, value|
+      vb.customize ["modifyvm", :id, "--#{key}", value]
+    end
   end
 
 
@@ -102,9 +108,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.roles_path = "./chef/roles"
     chef.data_bags_path = "./chef/data_bags"
     chef.environments_path = "./chef/environments"
-    chef.environment = "dev"
-    chef.log_level = "debug"
-
+    chef.environment = app_config['chef_env']
+    chef.log_level = app_config['chef_log']
+    chef.add_role("vagrant")
     chef.run_list = VAGRANT_JSON.delete('run_list')
     chef.json = VAGRANT_JSON.merge!({
         "mysql" => {
@@ -116,9 +122,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             "dir" => app_config["sync_folder"]
         }
     })
-    chef.add_role("vagrant")
-    chef.add_role("webserver")
-    chef.add_recipe("magento-ce")
   end
+
+  #-----------------------------------------------------------------------------
+  # hostmanager Provision
+  #-----------------------------------------------------------------------------
+  config.vm.provision :hostmanager
 
 end
