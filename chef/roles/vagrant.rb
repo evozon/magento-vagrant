@@ -15,3 +15,12 @@ env_run_list(
     "prod"      => all_env,
     "dev"       => all_env
 )
+
+override_attributes(
+  'elasticsearch' => {
+    'allocated_memory' => '512m',
+    'bootstrap' => {
+      'mlockall' => false
+    }
+  }
+)

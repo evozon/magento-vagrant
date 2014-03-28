@@ -3,7 +3,7 @@
 # Recipe:: install
 #
 # Copyright (C) 2014 Evozon Systems
-# 
+#
 # All rights reserved - Do Not Redistribute
 #
 
@@ -12,7 +12,6 @@ include_recipe "database::mysql"
 remote_file "#{Chef::Config[:file_cache_path]}/magento-#{node['magento']['version']}.tar.gz" do
     checksum node['magento']['checksum']
     source node['magento']['source']
-    mode "0644"
 end
 
 execute "extract_magento" do
@@ -37,8 +36,8 @@ end
 
 # mysql connection info
 mysql_connection_info = {
-    :host       => "localhost", 
-    :username   => 'root', 
+    :host       => "localhost",
+    :username   => 'root',
     :password   => node['mysql']['server_root_password']
 }
 
@@ -101,7 +100,7 @@ execute "magento-install" do
     args << "--use_secure_admin #{node['magento']['app']['use_secure_admin']}" unless node['magento']['app']['use_secure_admin'].empty?
     args << "--enable_charts #{node['magento']['app']['enable_charts']}" unless node['magento']['app']['enable_charts'].empty?
     args << "--encryption_key #{node['magento']['app']['encryption_key']}" unless node['magento']['app']['encryption_key'].empty?
-  
+
     cwd node['magento']['dir']
     command "php -f install.php -- #{args.join(' ')}"
 
